@@ -23,6 +23,7 @@ def unique_houses(filename):
         house = words[2]
         if house != '':
             houses.add(house)
+    data.close()
 
     return houses
 
@@ -48,8 +49,35 @@ def sort_by_cohort(filename):
     fall_15 = []
     ghosts = []
 
-    # Code goes here
+    data = open(filename)
 
+    for line in data: 
+        line = line.rstrip()
+        words = line.split('|')
+        name = " ".join(words[0:2])
+        cohort = words[-1]
+        # print('name is', name)
+        # print('cohort is', cohort, 'cohort type is', type(cohort))
+        if cohort == "Fall 2015":
+            # print('in Fall 15 if')
+            fall_15.append(name)
+        elif cohort == "Winter 2016":
+            # print('in Win 16 if')
+            winter_16.append(name)    
+        elif cohort == "Spring 2016":
+            # print('in Spr 16 if')
+            spring_16.append(name)
+        elif cohort == "Summer 2016":
+            # print('in Sum 16 if')
+            summer_16.append(name)
+        elif cohort == "G":
+            ghosts.append(name)
+    # print('win 16', winter_16)
+    # print('spr 16', spring_16)
+    # print('sum 16', summer_16)
+    # print('fall 15', fall_15)
+
+    all_students.extend([fall_15, winter_16, spring_16, summer_16, ghosts])
     return all_students
 
 
@@ -76,7 +104,35 @@ def hogwarts_by_house(filename):
     ghosts = []
     instructors = []
 
-    # Code goes here
+    data = open(filename)
+
+    for line in data: 
+        line = line.rstrip()
+        words = line.split('|')
+        last_name = words[1]
+        houses = words[2]
+        non_student = words[-1]
+
+        if houses == "Gryffindor":
+            gryffindor.append(last_name)
+        elif houses == "Hufflepuff":
+            hufflepuff.append(last_name)
+        elif houses == "Ravenclaw":
+            ravenclaw.append(last_name)
+        elif houses == "Slytherin":
+            slytherin.append(last_name)
+        elif houses == "Dumbledore's Army":
+            dumbledores_army.append(last_name)
+        elif non_student == "G":
+            ghosts.append(last_name)
+        elif non_student == "I":
+            instructors.append(last_name)
+
+    all_hogwarts.extend([sorted(dumbledores_army), sorted(gryffindor), sorted(hufflepuff),
+        sorted(ravenclaw), sorted(slytherin), sorted(ghosts), sorted(instructors)])
+   
+
+
 
     return all_hogwarts
 
@@ -96,7 +152,21 @@ def all_students_tuple_list(filename):
 
     student_list = []
 
-    # Code goes here
+    data = open(filename)
+
+    for line in data: 
+        line = line.rstrip()
+        words = line.split('|')
+        name = " ".join(words[0:2])
+        full_list = [name] + words[2:]
+        non_student = words[-1]
+        student = tuple(full_list)
+
+        if non_student not in 'IG':
+            student_list.append(student)
+
+
+
 
     return student_list
 
