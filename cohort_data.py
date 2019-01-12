@@ -191,7 +191,12 @@ def find_cohort_by_student_name(student_list):
 
     """
 
-    # Code goes here
+    student = input("Who are you looking for? ")
+
+    for name_tuple in student_list:
+        if student in name_tuple:
+            # print("{} was in the {} cohort".format(student, name_tuple[-1]))
+            return "{} was in the {} cohort".format(student, name_tuple[-1])
 
     return "Student not found."
 
@@ -213,8 +218,18 @@ def find_name_duplicates(filename):
     """
 
     duplicate_names = set()
+    index = 1
+    cohort_list = sort_by_cohort(filename)[:-1]
+    final_last_name = []
 
-    # Code goes here
+    for cohort in cohort_list:
+        # print('cohort is', cohort)
+        last_name_by_cohort = [student.split()[1] for student in cohort]
+        final_last_name.append(last_name_by_cohort)
+
+    for cohort_last in final_last_name:
+        duplicate_names = set(cohort_last) & set(final_last_name[1])
+        index += 1
 
     return duplicate_names
 
@@ -252,8 +267,8 @@ def find_house_members_by_student_name(student_list):
 
 #############################################################################
 # Here is some useful code to run these functions without doctests!
-
-# find_cohort_by_student_name(all_students_data)
+all_students_data = all_students_tuple_list('cohort_data.txt')
+find_cohort_by_student_name(all_students_data)
 # find_house_members_by_student_name(all_students_data)
 
 
